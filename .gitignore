@@ -1,0 +1,8 @@
+.ipynb_checkpoints
+__pycache__
+.idea
+upload
+*.wav
+*.json
+*.pyc
+
