@@ -87,7 +87,7 @@ def check_assignment2(plot=False):
     h = prototype_filter()
 
     # Create the cosine filter bank
-    cosine_bank = np.cos(np.pi/64. * (2*np.arange(32)[:,np.newaxis]+1)*(np.arange(h.shape[0])-16))
+    cosine_bank = np.cos(np.pi/64. * (2*np.arange(32)[:, np.newaxis]+1)*(np.arange(h.shape[0])-16))
     fb = cosine_bank*h
 
     # Frequency response
