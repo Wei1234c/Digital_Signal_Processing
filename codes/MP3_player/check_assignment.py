@@ -129,6 +129,7 @@ def check_assignment2(plot = False):
         plt.xlabel('Normalized frequency')
         plt.ylabel('Magnitude')
 
+        plt.tight_layout()
         plt.show()
 
     # compute the error only on pass band and stop

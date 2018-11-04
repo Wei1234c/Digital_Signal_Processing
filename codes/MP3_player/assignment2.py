@@ -41,13 +41,13 @@ def prototype_filter2():
     """
 
     N = 512
-    w = DSP.get_freq_bins(N)
+    w = dsp.get_freq_bins(N)
 
     H = np.zeros_like(w)
     H[abs(w) <= np.pi / 128] = 2
 
-    Fourier.plot = False
-    h = Fourier.idtft(H, n_samples = N, plt_abs = False)
+    fourier.plot = False
+    h = fourier.idtft(H, n_samples = N, plt_abs = False)
 
     return h
 
