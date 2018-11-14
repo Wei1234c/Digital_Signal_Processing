@@ -25,7 +25,7 @@ def get_db(x):
 
 
 def scaled_fft_db(x, targeted_db = 96):
-    x = weighted(x)
+    # x = weighted(x)
     spectrum = abs(dft(x)) / len(x)
     spectrum = get_db(spectrum)
     spectrum = spectrum + targeted_db - np.max(spectrum)

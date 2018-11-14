@@ -1,4 +1,3 @@
-import numpy as np
 from scipy.io import wavfile
 
 
@@ -79,8 +78,6 @@ def check_assignment1():
 
 
 def check_assignment2(plot = False):
-    from parameters import filter_coeffs
-
     h = prototype_filter()
 
     # Create the cosine filter bank
@@ -162,6 +159,11 @@ def check_assignment3():
         h = np.hanning(512)
         X = subband_filtering(x_in, h)
         X_check = np.loadtxt(fout)
+
+        plt.plot(X, 'r')
+        plt.plot(X_check, 'g')
+        plt.axhline(0, color = 'grey', ls = '--', alpha = 0.3)
+        plt.show()
 
         # compare to test output file content
         if np.allclose(X, X_check):
