@@ -1,5 +1,6 @@
-
 import numpy as np
+
+
 
 def quantization(sample, sf, ba, QCa, QCb):
     """ ASSIGNMENT 4
@@ -15,4 +16,4 @@ def quantization(sample, sf, ba, QCa, QCb):
         The uniformly quantized sample.
     """
 
-    # Your code goes here
+    return np.floor((QCa * sample / sf + QCb) * 2 ** (ba - 1))

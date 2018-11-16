@@ -1,12 +1,14 @@
 import numpy as np
 
 
+
 def weighted(x):
     N = len(x)
     n = np.arange(N)
     w = (1 - np.cos(2 * np.pi * n / (N - 1)))
     w = w / np.dot(w, w)
     return x * w
+
 
 
 def dft(samples):
@@ -18,10 +20,12 @@ def dft(samples):
     return spectrum
 
 
+
 def get_db(x):
     db = 20 * np.log10(x)
     db[np.where(x == 0)[0]] = -100
     return db
+
 
 
 def scaled_fft_db(x, targeted_db = 96):

@@ -60,11 +60,11 @@ class Tables:
     if bitrate >= 96:
       self.hear -= 12
 
-    self.map = np.zeros(FFT_SIZE / 2 + 1, dtype='uint16')
+    self.map = np.zeros(FFT_SIZE // 2 + 1, dtype='uint16')
     for i in range(self.subsize - 1):
       for j in range(self.line[i],self.line[i+1]):
         self.map[j] = i
-    for j in range(self.line[self.subsize - 1], FFT_SIZE / 2 + 1):
+    for j in range(self.line[self.subsize - 1], FFT_SIZE // 2 + 1):
       self.map[j] = self.subsize - 1
 
 
