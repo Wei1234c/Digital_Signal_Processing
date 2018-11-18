@@ -1,5 +1,7 @@
 from IPython.core.display import DisplayObject
 
+
+
 class Audio(DisplayObject):
     """Create an audio object.
 
@@ -60,26 +62,29 @@ class Audio(DisplayObject):
     Audio(data=b'RAW_WAV_DATA..)
 
     """
-        
-    def __init__(self, data=None, filename=None, url=None, embed=None, rate=None, autoplay=False):
+
+
+    def __init__(self, data = None, filename = None, url = None, embed = None, rate = None, autoplay = False):
         if filename is None and url is None and data is None:
             raise ValueError("No image data found. Expecting filename, url, or data.")
         if embed is False and url is None:
             raise ValueError("No url found. Expecting url when embed=False")
-            
+
         if url is not None and embed is not True:
             self.embed = False
         else:
             self.embed = True
         self.autoplay = autoplay
-        super(Audio, self).__init__(data=data, url=url, filename=filename)
-            
+        super(Audio, self).__init__(data = data, url = url, filename = filename)
+
         if self.data is not None and not isinstance(self.data, bytes):
-            self.data = self._make_wav(data,rate)
-            
+            self.data = self._make_wav(data, rate)
+
+
     def reload(self):
         """Reload the raw data from file or URL."""
         import mimetypes
+
         if self.embed:
             super(Audio, self).reload()
 
@@ -89,26 +94,28 @@ class Audio(DisplayObject):
             self.mimetype = mimetypes.guess_type(self.url)[0]
         else:
             self.mimetype = "audio/wav"
-            
-            
-    def _make_wav(self,data,rate):
+
+
+    def _make_wav(self, data, rate):
         """ Transform a numpy array to a PCM bytestring """
         import struct
         from io import BytesIO
         import wave
-        maxabsvalue = max(list(map(abs,data)))
-        scaled = [int(x/maxabsvalue*32767) for x in data]
+
+        maxabsvalue = max(list(map(abs, data)))
+        scaled = [int(x / maxabsvalue * 32767) for x in data]
         fp = BytesIO()
-        waveobj = wave.open(fp,mode='wb')
+        waveobj = wave.open(fp, mode = 'wb')
         waveobj.setnchannels(1)
         waveobj.setframerate(rate)
         waveobj.setsampwidth(2)
-        waveobj.setcomptype('NONE','NONE')
-        waveobj.writeframes(b''.join([struct.pack('<h',x) for x in scaled]))
+        waveobj.setcomptype('NONE', 'NONE')
+        waveobj.writeframes(b''.join([struct.pack('<h', x) for x in scaled]))
         val = fp.getvalue()
         waveobj.close()
         return val
-    
+
+
     def _data_and_metadata(self):
         """shortcut for returning metadata with url information, if defined"""
         md = {}
@@ -118,7 +125,8 @@ class Audio(DisplayObject):
             return self.data, md
         else:
             return self.data
-        
+
+
     def _repr_html_(self):
         src = """
                 <audio controls="controls" {autoplay}>
@@ -126,20 +134,23 @@ class Audio(DisplayObject):
                     Your browser does not support the audio element.
                 </audio>
               """
-        return src.format(src=self.src_attr(),type=self.mimetype, autoplay=self.autoplay_attr())
+        return src.format(src = self.src_attr(), type = self.mimetype, autoplay = self.autoplay_attr())
+
 
     def src_attr(self):
         import base64
+
         if self.embed and (self.data is not None):
-                return """data:{type};base64,{base64}""".format(type=self.mimetype, 
-                                                                base64=base64.b64encode(self.data).decode('ascii'))
+            return """data:{type};base64,{base64}""".format(type = self.mimetype,
+                                                            base64 = base64.b64encode(self.data).decode('ascii'))
         elif self.url is not None:
             return self.url
         else:
             return ""
 
+
     def autoplay_attr(self):
-        if(self.autoplay):
+        if (self.autoplay):
             return 'autoplay="autoplay"'
         else:
             return ''
